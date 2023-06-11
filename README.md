@@ -76,6 +76,13 @@ You can also access this using lua as the following functions:
 * `require('muren.api').open_fresh_ui`
 * `require('muren.api').open_unique_ui`
 
+The relevant commands and exposed functions take optional arguments to position the ui windows, e.g.
+`:MurenOpen top` or `:MurenToggle bottom_left` (command completion available)
+
+```lua
+require('muren.api').open_ui({anchor = "top", vertical_offset = 5})`
+```
+
 ## Configuration
 Pass settings to `require('muren').setup`. The current defaults are:
 ```lua
