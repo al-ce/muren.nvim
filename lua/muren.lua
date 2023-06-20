@@ -11,22 +11,22 @@ M.anchor_positions = {
   'bottom_right',
 }
 
+
 M.setup = function(opts)
   local options = require('muren.options')
   options.update(opts or {})
 
   local api = require('muren.api')
   local muren_commands = {
-    MurenOpen = { api.open_ui, true },
-    MurenClose = { api.close_ui, nil },
-    MurenToggle = { api.toggle_ui, true },
-    MurenFresh = { api.open_fresh_ui, true },
-    MurenUnique = { api.open_unique_ui, true },
+    MurenOpen = api.open_ui,
+    MurenClose = api.close_ui,
+    MurenToggle = api.toggle_ui,
+    MurenFresh = api.open_fresh_ui,
+    MurenUnique = api.open_unique_ui,
   }
 
   local create_muren_commands = function()
-    for name, muren_cmd in pairs(muren_commands) do
-      local muren_api, range = unpack(muren_cmd)
+    for name, muren_api in pairs(muren_commands) do
       vim.api.nvim_create_user_command(name, function(args)
         local anchor, vertical_offset, horizontal_offset = unpack(args.fargs)
         muren_api({
@@ -39,7 +39,7 @@ M.setup = function(opts)
         })
       end, {
         nargs = '*',
-        range = range,
+        range = true,
         complete = function()
           local cmdline = vim.fn.getcmdline()
           local _, space_count = string.gsub(cmdline, ' ', '')
